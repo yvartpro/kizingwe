@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "name": "Aline Ndikumana",
+    "dob": "2001-02-02",
+    "address": "Quartier Asiatique, Gitega",
+    "class": "2",
+    "section": "B",
+    "phone": "+257620000001"
+  },
+  {
+    "id": 2,
+    "name": "Eric Habonimana",
+    "dob": "2002-03-03",
+    "address": "Avenue de l'Indépendance, Ngozi",
+    "class": "3",
+    "section": "C",
+    "phone": "+257630000002"
+  },
+  {
+    "id": 3,
+    "name": "Claudine Nshimirimana",
+    "dob": "2003-04-04",
+    "address": "Avenue Mugamba, Makamba",
+    "class": "4",
+    "section": "D",
+    "phone": "+257640000003"
+  },
+  {
+    "id": 4,
+    "name": "Didier Ndayishimiye",
+    "dob": "2004-05-05",
+    "address": "Avenue de la Paix, Muyinga",
+    "class": "5",
+    "section": "E",
+    "phone": "+257650000004"
+  },
+  {
+    "id": 5,
+    "name": "Sandrine Uwimana",
+    "dob": "2005-06-06",
+    "address": "Avenue Kayanza, Kayanza",
+    "class": "6",
+    "section": "F",
+    "phone": "+257660000005"
+  },
+  {
+    "id": 6,
+    "name": "Fabrice Hakizimana",
+    "dob": "2006-07-07",
+    "address": "Avenue Nyamugari, Rumonge",
+    "class": "7",
+    "section": "A",
+    "phone": "+257670000006"
+  },
+  {
+    "id": 7,
+    "name": "Olivia Mukamana",
+    "dob": "2007-08-08",
+    "address": "Boulevard Rwagasore, Bururi",
+    "class": "8",
+    "section": "B",
+    "phone": "+257680000007"
+  },
+  {
+    "id": 8,
+    "name": "Patrick Nduwimana",
+    "dob": "2008-09-09",
+    "address": "Avenue Mugamba, Karuzi",
+    "class": "9",
+    "section": "C",
+    "phone": "+257690000008"
+  },
+  {
+    "id": 9,
+    "name": "Chantal Irakoze",
+    "dob": "2009-10-10",
+    "address": "Route Kayanza, Kirundo",
+    "class": "10",
+    "section": "D",
+    "phone": "+257610000009"
+  },
+  {
+    "id": 10,
+    "name": "Jean Niyonzima",
+    "dob": "2000-11-11",
+    "address": "Avenue du Marché, Bujumbura",
+    "class": "11",
+    "section": "E",
+    "phone": "+257620000010"
+  }
+]
