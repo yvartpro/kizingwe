@@ -13,16 +13,19 @@ const SellAndOrder = (props) => {
 
   const getItem = (event) => {
     const currItem = products.filter((p) => p.id === parseInt(event.target.value))
-    setItem((prev) => ({...prev, 'name':currItem[0].prod_name, 'price': currItem[0].price}))
+    setItem((prev) => ({...prev, 'id': currItem[0].id, 'name':currItem[0].prod_name, 'price': currItem[0].price}))
   }
 
   //add selected item to order list
   const pushItem = () => {
     setOrderList((prev) => [...prev, item])
   }
-  //place command 
-  const placeCommand = () => {
-  	console.log(orderList, waiter)
+  //place command
+  const placeCommand = async () => {
+    axios
+      .post('http://localhost/sell.php',{items: orderList, waiter: waiter})
+      .then((resp) => console.log(resp.data))
+      .catch((err) => console.error(err))
   }
   return(
     <>

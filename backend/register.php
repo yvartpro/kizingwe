@@ -1,12 +1,8 @@
 <?php
 
-header("Access-Control-Allow-Origin: *");
 include './conn.php';
 $data = json_decode(file_get_contents("php://input"),true);
 
-// if(empty($data['name']) || empty($data['username']) ||empty($data['phone']) || empty($data['password'])):
-//   throw new Exception('Tous les champs sont requis.');
-// endif;
 $name = $data['name'];
 $username = $data['username'];
 $phone = $data['phone'];
