@@ -1,52 +1,61 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Paper from '@mui/material/Paper'
-import students from '../assets/students.json'
-import { DataGrid } from '@mui/x-data-grid'
-import {frFR} from '@mui/x-data-grid/locales'
-import TextField from '@mui/material/TextField'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import axios from 'axios'
 
-const Stock = () => {
-	const [filtered, setFilter] = useState([])
-	const [query, setQuery] = useState('')
-	const columns = [
-		{field: 'id', headerName: 'ID', width: 50},
-		{field: 'name', headerName: 'Nom et prénom', width: 200},
-		{field: 'dob', headerName: 'Né le', width: 100},
-		{field: 'class', headerName: 'Classe', width: 70},
-		{field: 'section', headerName: 'Section', width: 70},
-		{field: 'address', headerName: 'Addresse', width: 200},
-		{field: 'phone', headerName: 'Téléphone', width: 200},
-	]
+const Stock = (props) => {
+  const [invoices, setInvoices] = useState([]);
+  const [orders, setOrders] = useState([]);
 
-	const getQuery = (e) => {
-		setQuery(e.target.value)
-	}
-  const stds = students.filter((student) => student.name.toLowerCase().includes(query) 
-  	|| student.id.toString().includes(query)) || students
+  useEffect(() => {
+    axios.get('http://localhost/fetch/invoices.php')
+      .then(resp => setInvoices(resp.data))
+      .catch(err => console.error(err));
+      
+    axios.get('http://localhost/fetch/orders.php')
+      .then(resp => setOrders(resp.data))
+      .catch(err => console.error(err));
+  }, []);
 
 	return(
 	<>
-		<Paper  sx={{ mt: 2, p: 2, border: 0, borderRadius: 3 }}>
-			<Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-				<Typography variant='h4' component='h2'>Caisse et transactions</Typography>
-				<TextField 
-					type='search' 
-					name='query' 
-					onChange={getQuery} 
-					placeholder='Rechercher par nom ou ID'
-				/>
-			</Box>
-			<DataGrid
-				columns={columns}
-				rows={stds}
-				sx={{ border: 0, borderRadius: 3, mt: 2, p: 2 }}
-				pageSize={5}
-        pageSizeOptions={[5, 10, 25,50,100]}
-				localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
-			/>
-		</Paper>
+    <div className="container mx-auto p-6">
+      <Paper sx={{ mt: 2, p: 4, borderRadius: 3 }} className="shadow-lg">
+        <Box className="mb-4">
+          <Typography variant='h4' className="text-gray-700 font-bold">Caisse et transactions</Typography>
+        </Box>
+        <div className="mt-6 grid lg:grid-cols-2 gap-4">
+          {invoices.map(invoice => (
+            <div key={invoice.invoice_id} className="border p-4 rounded-lg shadow-md mb-4 bg-white">
+              <h2 className="text-lg font-semibold">Facture n°{invoice.invoice_id}</h2>
+              <table className="w-full border-collapse border border-gray-300 mt-2 rounded-lg">
+                <thead className="bg-gray-200">
+                  <tr>
+                    <th className="border px-4 py-2">#</th>
+                    <th className="border px-4 py-2">Article</th>
+                    <th className="border px-4 py-2">QT</th>
+                    <th className="border px-4 py-2">P.U</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orders.filter(order => order.invoice_id === invoice.invoice_id).map((order, index) => (
+                    <tr key={index} className="hover:bg-gray-100">
+                      <td className="border px-4 py-2">{index + 1}</td>
+                      <td className="border px-4 py-2">{order.prod_name}</td>
+                      <td className="border px-4 py-2">{order.quantity}</td>
+                      <td className="border px-4 py-2">{order.price}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <p className="text-right font-bold mt-2">Total: {invoice.total}</p>
+              <p className="text-right">Serveur: {invoice.waiter_name}</p>
+            </div>
+          ))}
+        </div>
+      </Paper>
+    </div>
 	</>
 	)
 }

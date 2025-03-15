@@ -28,7 +28,7 @@ function App() {
       .then((resp) => {
         setProducts(resp.data)
        })
-      .then((err) => console.error(err))
+      .catch((err) => console.error(err))
   },[])
 
   //waiter list
@@ -38,7 +38,7 @@ function App() {
       .then((resp) =>{
         setWaiters(resp.data)
       })
-      .then((err) => console.error(err))
+      .catch((err) => console.error(err))
   },[])
 
   const themeMob = useTheme()
@@ -54,7 +54,7 @@ function App() {
             <Route path='/home' element={<Home/>}/>
             <Route path='/ventes-commandes' element={<SellAndOrder waiters={waiters} products={products}/>} />
             <Route path='/caisse-transactions' element={<Transactions/>}/>
-            <Route path='/stock-articles' element={<Stock/>}/>
+            <Route path='/stock-articles' element={<Stock products={products}/>}/>
           </Route>
           <Route path='/*' element={<NotFound/>}/>
         </Routes>

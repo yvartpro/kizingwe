@@ -1,50 +1,43 @@
 import { useState } from 'react'
 import Paper from '@mui/material/Paper'
 import students from '../assets/students.json'
-import { DataGrid } from '@mui/x-data-grid'
+import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid'
 import {frFR} from '@mui/x-data-grid/locales'
 import TextField from '@mui/material/TextField'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-const Stock = () => {
-	const [filtered, setFilter] = useState([])
-	const [query, setQuery] = useState('')
+const Stock = (props) => {
 	const columns = [
-		{field: 'id', headerName: 'ID', width: 50},
-		{field: 'name', headerName: 'Nom et prénom', width: 200},
-		{field: 'dob', headerName: 'Né le', width: 100},
-		{field: 'class', headerName: 'Classe', width: 70},
-		{field: 'section', headerName: 'Section', width: 70},
-		{field: 'address', headerName: 'Addresse', width: 200},
-		{field: 'phone', headerName: 'Téléphone', width: 200},
+		{field: 'id', headerName: '#', width: 40,disableColumnMenu: true},
+		{field: 'prod_name', headerName: 'Article', width: 150, editable: true, sortable: false, disableColumnMenu: true},
+		{field: 'quantity', headerName: 'QT', width: 60, editable: true,sortable: false, disableColumnMenu: true},
+		{field: 'bt_caisse', headerName: 'BT', width: 40, editable: true,sortable: false, disableColumnMenu: true},
+		{field: 'pau', headerName: 'P.A.U', width: 100, editable: true,sortable: false, disableColumnMenu: true},
+		{field: 'price', headerName: 'P.V.U', width: 100, editable: true,sortable: false, disableColumnMenu: true},
 	]
-
-	const getQuery = (e) => {
-		setQuery(e.target.value)
-	}
-  const stds = students.filter((student) => student.name.toLowerCase().includes(query) 
-  	|| student.id.toString().includes(query)) || students
+// Customizing the Quick Filtersearch input
+const quickSearchFilter = () =>(
+  <div className="p-2">
+    <GridToolbarQuickFilter className="border border-gray-300 p-2 rounded-sm shadow-sm focus:ring-2 focus:ring-blue-400 outline-none w-60"/>
+  </div>)
 
 	return(
 	<>
 		<Paper  sx={{ mt: 2, p: 2, border: 0, borderRadius: 3 }}>
 			<Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
 				<Typography variant='h4' component='h2'>Produits et stock</Typography>
-				<TextField 
-					type='search' 
-					name='query' 
-					onChange={getQuery} 
-					placeholder='Rechercher par nom ou ID'
-				/>
 			</Box>
 			<DataGrid
 				columns={columns}
-				rows={stds}
+				rows={props.products}
 				sx={{ border: 0, borderRadius: 3, mt: 2, p: 2 }}
 				pageSize={5}
+				checkboxSelection 
+        disableRowSelectionOnClick={true}
         pageSizeOptions={[5, 10, 25,50,100]}
 				localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
+				slots={{  toolbar: quickSearchFilter }}
 			/>
 		</Paper>
 	</>

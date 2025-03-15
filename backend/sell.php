@@ -6,7 +6,7 @@ $data = json_decode(file_get_contents("php://input"), true);
 if (!$data || !isset($data['waiter']) || !isset($data['items']) || empty($data['items'])) {
     echo json_encode(['status' => 'error', 'message' => 'Invalid JSON request']);
     exit;
-}
+} 
 
 $waiter_id = intval($data['waiter']);
 $items = $data['items'];
