@@ -21,18 +21,16 @@ function App() {
   const [products, setProducts] = useState([])
   const [waiters, setWaiters] = useState([])
 
-  //product list
   useEffect(() => {
+  //product list
     axios
       .get('http://localhost/fetch/products.php')
       .then((resp) => {
         setProducts(resp.data)
        })
       .catch((err) => console.error(err))
-  },[])
 
-  //waiter list
-  useEffect(() => {
+    //waiter list
     axios
       .get('http://localhost/fetch/waiters.php')
       .then((resp) =>{
@@ -40,6 +38,17 @@ function App() {
       })
       .catch((err) => console.error(err))
   },[])
+  //addnew product
+  const saveArticle = (newProd) => {
+    axios
+      .post('http://localhost/add_product.php',{item: newProd})
+      .then((resp) => {
+        const lastIProd = resp.data
+        setProducts((prev)=> [...prev, lastIProd])
+      })
+      .catch((err) => console.error(err))
+  }
+
 
   const themeMob = useTheme()
   const isMobile = useMediaQuery(themeMob.breakpoints.down("sm"))
@@ -54,7 +63,14 @@ function App() {
             <Route path='/home' element={<Home/>}/>
             <Route path='/ventes-commandes' element={<SellAndOrder waiters={waiters} products={products}/>} />
             <Route path='/caisse-transactions' element={<Transactions/>}/>
-            <Route path='/stock-articles' element={<Stock products={products}/>}/>
+            <Route 
+              path='/stock-articles' element={<Stock 
+                user={user} 
+                products={products} 
+                saveArticle={saveArticle}
+                setProducts={setProducts}
+              />}
+            />
           </Route>
           <Route path='/*' element={<NotFound/>}/>
         </Routes>

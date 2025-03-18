@@ -17,7 +17,6 @@ const Stock = (props) => {
       .then(resp => setOrders(resp.data))
       .catch(err => console.error(err));
   }, []);
-
 	return(
 	<>
     <div className="container mx-auto p-6">
@@ -27,8 +26,8 @@ const Stock = (props) => {
         </Box>
         <div className="mt-6 grid lg:grid-cols-2 gap-4">
           {invoices.map(invoice => (
-            <div key={invoice.invoice_id} className="border p-4 rounded-lg shadow-md mb-4 bg-white">
-              <h2 className="text-lg font-semibold">Facture n°{invoice.invoice_id}</h2>
+            <div key={invoice.id} className="border p-4 rounded-lg shadow-md mb-4 bg-white">
+              <h2 className="text-lg font-semibold">Facture n°{invoice.id}</h2>
               <table className="w-full border-collapse border border-gray-300 mt-2 rounded-lg">
                 <thead className="bg-gray-200">
                   <tr>
@@ -39,7 +38,7 @@ const Stock = (props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {orders.filter(order => order.invoice_id === invoice.invoice_id).map((order, index) => (
+                  {orders.filter(order => order.invoice_id === invoice.id).map((order, index) => (
                     <tr key={index} className="hover:bg-gray-100">
                       <td className="border px-4 py-2">{index + 1}</td>
                       <td className="border px-4 py-2">{order.prod_name}</td>
@@ -49,8 +48,8 @@ const Stock = (props) => {
                   ))}
                 </tbody>
               </table>
-              <p className="text-right font-bold mt-2">Total: {invoice.total}</p>
-              <p className="text-right">Serveur: {invoice.waiter_name}</p>
+              <p className="text-right font-bold mt-2">Total: {invoice.total} Fbu</p>
+              <p className="text-right text-sm">Serveur: {invoice.waiter_name}</p>
             </div>
           ))}
         </div>
