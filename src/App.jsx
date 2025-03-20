@@ -12,6 +12,7 @@ import SellAndOrder from './components/Sell'
 import Stock from './components/Stock'
 import Transactions from './components/Transactions'
 import Home from './components/Home'
+import Journal from './components/Journal'
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 
@@ -71,6 +72,7 @@ function App() {
                 setProducts={setProducts}
               />}
             />
+            <Route path='/journal' element={<Journal/>}/>
           </Route>
           <Route path='/*' element={<NotFound/>}/>
         </Routes>

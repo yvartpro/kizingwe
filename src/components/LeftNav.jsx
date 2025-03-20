@@ -37,9 +37,10 @@ const LeftNav = ({ user, isMobile, draweWidth, changeState }) => {
     { id: 4, link: '/ventes-commandes', text: 'Ventes et commandes', icon: <ShoppingCart/> },
     { id: 5, link: '/stock-articles', text: 'Produits et Stock', icon: <Inventory/> },
     { id: 6, link: '/caisse-transactions', text: 'Caisse et Transactions', icon: <PointOfSale/> },
-    { id: 7, text: 'Autres' },
-    { id: 8, link: '/profile', text: 'Profil', icon: <ProfileIcon/>},
-    { id: 9, link: '/auth', text: 'D\u00e9connexion', icon: <ExitToApp/> , event: logout },
+    { id: 7, link: '/journal', text: 'Journal', icon: <PointOfSale/> },
+    { id: 8, text: 'Autres' },
+    { id: 9, link: '/profile', text: 'Profil', icon: <ProfileIcon/>},
+    { id: 10, link: '/auth', text: 'D\u00e9connexion', icon: <ExitToApp/> , event: logout },
   ]
 
   return (

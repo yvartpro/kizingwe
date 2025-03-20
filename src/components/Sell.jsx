@@ -25,31 +25,25 @@ const SellAndOrder = ({ products, waiters }) => {
       setItem({ id: '', name: '', quantity: '', price: '' })
     }
   }
-
   const placeCommand = async () => {
-    console.log(orderList)
     axios.post('http://localhost/sell.php', { items: orderList, waiter })
       .then(resp => {
         setWaiter('')
-        console.log(resp.data)
       })
       .catch(err => console.error(err))
   }
-
+  useEffect(() =>{
+    console.log(orderList)
+  },[orderList])
   return (
     <div className="container mx-auto p-4">
       <Paper sx={{ mt: 2, p: 4, borderRadius: 3 }} className="shadow-lg">
-        <Box className="mb-4">
-          <Typography variant='h4' className="text-gray-700 font-bold text-center md:text-left">
-            Ventes et commandes
-          </Typography>
-        </Box>
-
+        <p>Ventes et commandes</p>
         <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
           {/* Sélection des articles et serveurs */}
           <div className="bg-gray-100 p-4 rounded-md">
             <div className="flex flex-wrap gap-4">
-              <select onChange={getItem} value={item.id} className="border p-2 w-full rounded">
+              <select onChange={getItem} value={item.id} className="border p-2 rounded">
                 <option>--Article--</option>
                 {products.map(prod => <option key={prod.id} value={prod.id}>{prod.prod_name}</option>)}
               </select>

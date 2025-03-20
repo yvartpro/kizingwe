@@ -33,7 +33,6 @@ try{
     $stmt->bindParam(':price',$price);
     $stmt->bindParam(':pau',$pau);
     $stmt->execute();
-
   }
   //reset the products sate for plus and minus
   $stmt = $conn->prepare("UPDATE product SET plus = 0, minus = 0");
@@ -41,6 +40,6 @@ try{
 
   $conn->commit();
 }catch(PDOException $e){
- $conn->rollBack();
-  echo json_encode($e->getMessage());
+  $conn->rollBack();
+  echo json_encode(['error'=>true, 'code'=>$e->getCode()]);
 }
