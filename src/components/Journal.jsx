@@ -3,46 +3,41 @@ import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Chart from 'chart.js/auto';
 
-const Journal = () => {
+const Journal = ({setMsg, msg}) => {
     const [stats, setStats] = useState([]);
     const [sapor, setSapor] = useState('');
     const [selectedDate, setSelectedDate] = useState('');
     const [totals, setTotals] = useState({
-        total_init: 0,
-        total_entree: 0,
-        total_sort: 0,
-        total_rest: 0,
-        total_ben: 0,
-        total_tot: 0
+        total_init: 0,total_entree: 0,total_sort: 0,
+        total_rest: 0,total_ben: 0,total_tot: 0
     });
 
     const chartRef = useRef(null);
     let chartInstance = useRef(null);
 
     const generateJournal = () => {
+
         axios.get('http://localhost/daily_stat.php')
             .then((resp) => {
                 if (resp.data.error && resp.data.code === '23000') {
-                    setSapor('Vous avez déjà généré le journal.');
+                    setMsg('Vous avez déjà généré le journal.')
+                }else{
+                    setMsg('Une erreur est survenue')
                 }
             })
-            .catch((err) => setSapor(err.message));
+            .catch((err) => setMsg(err.message));
     };
 
     const fetchDataByDate = (date) => {
         axios.get(`http://localhost/fetch/daily_stat.php?date=${date}`)
             .then((resp) => setStats(resp.data))
-            .catch((err) => setSapor(err.message));
+            .catch((err) => setMsgude(err.message));
     };
 		useEffect(() => {
 		    if (stats.length === 0) {
 		        setTotals({
-		            total_init: 0,
-		            total_entree: 0,
-		            total_sort: 0,
-		            total_rest: 0,
-		            total_ben: 0,
-		            total_tot: 0
+		            total_init: 0, total_entree: 0, total_sort: 0,
+		            total_rest: 0, total_ben: 0, total_tot: 0
 		        });
 
 		        // Destroy previous chart if exists
@@ -105,6 +100,11 @@ const Journal = () => {
 		    });
 		}, [stats]);
 
+        const headers = [
+            {title: '#'},{title: 'Article'},{title: 'P.A.U'},{title: 'Initial'},
+            {title: 'Entrées'},{title: 'P.V.U'},{title: 'Total'},{title: 'Restant'},{title: 'Benefice'}
+        ]
+
     return (
         <div className="container mx-auto p-6">
             <Paper sx={{ mt: 2, p: 4, borderRadius: 3 }} className="shadow-lg">
@@ -132,15 +132,7 @@ const Journal = () => {
                         <table className="w-full border-collapse border border-gray-300 mt-2">
                             <thead className="bg-gray-200">
                                 <tr>
-                                    <th className="border px-4 py-2">#</th>
-                                    <th className="border px-4 py-2">Article</th>
-                                    <th className="border px-4 py-2">P.A.U</th>
-                                    <th className="border px-4 py-2">Initial</th>
-                                    <th className="border px-4 py-2">Entrées</th>
-                                    <th className="border px-4 py-2">Total</th>
-                                    <th className="border px-4 py-2">P.V</th>
-                                    <th className="border px-4 py-2">Sorties</th>
-                                    <th className="border px-4 py-2">Restant</th>
+                                    { headers.map((header, index) => <th key={index} className="border px-4 py-2">{header.title}</th>)}
                                 </tr>
                             </thead>
                             <tbody>

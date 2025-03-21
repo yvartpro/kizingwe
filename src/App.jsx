@@ -13,6 +13,7 @@ import Stock from './components/Stock'
 import Transactions from './components/Transactions'
 import Home from './components/Home'
 import Journal from './components/Journal'
+import Message from './components/Message'
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 
@@ -21,6 +22,7 @@ function App() {
   const user  =  JSON.parse(localStorage.getItem('currUser')) || false
   const [products, setProducts] = useState([])
   const [waiters, setWaiters] = useState([])
+  const [msg, setMsg] = useState('')
 
   useEffect(() => {
   //product list
@@ -49,14 +51,13 @@ function App() {
       })
       .catch((err) => console.error(err))
   }
-
-
+  
   const themeMob = useTheme()
   const isMobile = useMediaQuery(themeMob.breakpoints.down("sm"))
-
   return (
     <>
     <ThemeProvider theme={theme}>
+      { !!msg && <Message msg={msg}/>}
       <Router>
         <Routes>
           <Route path='/auth' element={<Login isMobile={isMobile}/>}/>
@@ -72,7 +73,7 @@ function App() {
                 setProducts={setProducts}
               />}
             />
-            <Route path='/journal' element={<Journal/>}/>
+            <Route path='/journal' element={<Journal setMsg={setMsg}/>}/>
           </Route>
           <Route path='/*' element={<NotFound/>}/>
         </Routes>

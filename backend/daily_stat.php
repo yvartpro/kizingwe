@@ -37,9 +37,11 @@ try{
   //reset the products sate for plus and minus
   $stmt = $conn->prepare("UPDATE product SET plus = 0, minus = 0");
   $stmt->execute();
-
   $conn->commit();
+  
+  echo json_encode('Success');
+
 }catch(PDOException $e){
   $conn->rollBack();
-  echo json_encode(['error'=>true, 'code'=>$e->getCode()]);
+  echo json_encode(['error'=>true, 'sapor'=>$e->getMessage(), 'code'=>$e->getCode()]);
 }
