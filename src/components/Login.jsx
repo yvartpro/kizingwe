@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 import { useState, useEffect } from 'react'
 import { RadioGroup, Radio } from '@mui/material'
 
-const LoginRegister = ({isMobile}) => {
+const LoginRegister = ({isMobile, setMsg}) => {
   const [isLogin, setIsLogin] = useState(true)
   const [user, setUser] = useState({name: '', username: '', phone: '', password: ''})
   const [sapor, setSapor] = useState('')
@@ -36,6 +36,7 @@ const LoginRegister = ({isMobile}) => {
       window.location.href = '/'
     }catch(err){
       setSapor(err.message)
+      setMsg(err.message)
       setTimeout(()=>{setSapor('')},3000)
     }
   }
@@ -53,6 +54,7 @@ const LoginRegister = ({isMobile}) => {
       setIsLogin(true)
     }catch(err){
       setSapor(err.message)
+      setMsg(err.message)
       setTimeout(()=>{setSapor('')},3000)
     }
   }

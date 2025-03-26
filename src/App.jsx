@@ -60,7 +60,7 @@ function App() {
       { !!msg && <Message msg={msg}/>}
       <Router>
         <Routes>
-          <Route path='/auth' element={<Login isMobile={isMobile}/>}/>
+          <Route path='/auth' element={<Login isMobile={isMobile} setMsg={setMsg}/>}/>
           <Route path='/' element={<Dashboard user={user} isMobile={isMobile}/>}>
             <Route path='/home' element={<Home/>}/>
             <Route path='/ventes-commandes' element={<SellAndOrder waiters={waiters} products={products}/>} />
