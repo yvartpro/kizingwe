@@ -27,7 +27,7 @@ const Stock = (props) => {
         <div className="mt-6 grid lg:grid-cols-2 gap-4">
           {invoices.map(invoice => (
             <div key={invoice.id} className="border p-4 rounded-lg shadow-md mb-4 bg-white">
-              <h2 className="text-lg font-semibold">Facture n°{invoice.id}</h2>
+              <h2 className="text-lg font-medium text-green-700">Facture n°{invoice.id}</h2>
               <table className="w-full border-collapse border border-gray-300 mt-2 rounded-lg">
                 <thead className="bg-gray-200">
                   <tr>

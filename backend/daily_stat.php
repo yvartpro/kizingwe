@@ -39,7 +39,7 @@ try{
   $stmt->execute();
   $conn->commit();
   
-  echo json_encode('Success');
+  echo json_encode(['success'=>true, 'products'=>$products]);
 
 }catch(PDOException $e){
   $conn->rollBack();

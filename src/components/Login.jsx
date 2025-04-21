@@ -5,8 +5,11 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import { useState, useEffect } from 'react'
 import { RadioGroup, Radio } from '@mui/material'
+import { login } from '../Auth'
+import { useNavigate } from 'react-router-dom'
 
 const LoginRegister = ({isMobile, setMsg}) => {
+  const navigate = useNavigate()
   const [isLogin, setIsLogin] = useState(true)
   const [user, setUser] = useState({name: '', username: '', phone: '', password: ''})
   const [sapor, setSapor] = useState('')
@@ -33,7 +36,8 @@ const LoginRegister = ({isMobile, setMsg}) => {
 
       if(res.sapor) throw new Error(res.sapor)
       localStorage.setItem('currUser',JSON.stringify(res.user))
-      window.location.href = '/'
+      login()
+      navigate('/ventes-commandes')
     }catch(err){
       setSapor(err.message)
       setMsg(err.message)

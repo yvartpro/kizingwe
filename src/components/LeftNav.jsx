@@ -11,13 +11,16 @@ import Box from "@mui/material/Box"
 import IconButton from "@mui/material/IconButton"
 import Drawer from "@mui/material/Drawer"
 import Typography from '@mui/material/Typography'
+import { useNavigate } from 'react-router-dom'
+import { logout } from '../Auth'
 
 import { Menu as MenuIcon, Close as CloseIcon, ChevronLeft, ChevronRight, Home as HomeIcon, AccountBalance,
   AssignmentInd,ShoppingCart, Inventory, PointOfSale,  AccountCircle as ProfileIcon, ExitToApp, School as TeacherIcon, Diversity3 as AttendeeIcon, Group as StudentIcon
 } from "@mui/icons-material"
 
 const LeftNav = ({ user, isMobile, draweWidth, changeState }) => {
-  if (!user) window.location.href = "/auth"
+  const navigate = useNavigate()
+  // if (!user) window.location.href = "/auth"
 
   const [expanded, setExpanded] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -26,21 +29,22 @@ const LeftNav = ({ user, isMobile, draweWidth, changeState }) => {
     setExpanded(!expanded)
     changeState(!expanded)
   }
-  const logout = () => {
+  const logoutUser = () => {
     localStorage.removeItem("currUser")
+    logout()
+    navigate('/auth')
   }
 
   //menu list items
   const menuList = [
     { id: 1, text: 'Menu' },
-    { id: 2, link: '/home', text: 'Acceuil', icon: <HomeIcon/> },
     { id: 4, link: '/ventes-commandes', text: 'Ventes et commandes', icon: <ShoppingCart/> },
     { id: 5, link: '/stock-articles', text: 'Produits et Stock', icon: <Inventory/> },
     { id: 6, link: '/caisse-transactions', text: 'Caisse et Transactions', icon: <PointOfSale/> },
     { id: 7, link: '/journal', text: 'Journal', icon: <PointOfSale/> },
     { id: 8, text: 'Autres' },
-    { id: 9, link: '/profile', text: 'Profil', icon: <ProfileIcon/>},
-    { id: 10, link: '/auth', text: 'D\u00e9connexion', icon: <ExitToApp/> , event: logout },
+    { id: 9, link: '/serveurs', text: 'Serveurs', icon: <ProfileIcon/>},
+    { id: 10, link: '/auth', text: 'D\u00e9connexion', icon: <ExitToApp/> , event: logoutUser },
   ]
 
   return (

@@ -6,6 +6,7 @@ import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import LeftNav from './LeftNav'
 
+
 const Dashboard = ({ user, isMobile }) => {
   const [expanded, setExpanded] = useState(false)
   const draweWidth = {

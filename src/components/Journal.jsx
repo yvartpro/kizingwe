@@ -14,15 +14,31 @@ const Journal = ({setMsg, msg}) => {
 
     const chartRef = useRef(null);
     let chartInstance = useRef(null);
+    const now = new Date()
+    const hour = now.getHours()
 
     const generateJournal = () => {
-
+        if(!navigator.onLine) {
+            setMsg('Vous devez etres connecte!')
+            return
+        }
         axios.get('http://localhost/daily_stat.php')
             .then((resp) => {
                 if (resp.data.error && resp.data.code === '23000') {
-                    setMsg('Vous avez déjà généré le journal.')
+                    throw new Error('Vous avez déjà généré le journal.')
+                }else if(resp.data.error){
+                    throw new Error('Une erreur est survenue')
                 }else{
-                    setMsg('Une erreur est survenue')
+                    axios.post('https://capbio.bi/api/add_daily_stat.php',{products: resp.data.products})
+                      .then((res)=>{
+                        if(res.data.success){
+                            setMsg(res.data.message)
+                        }else{
+                            setMsg(res.data.error)
+                        }
+                      })
+                      .catch((err)=>setMsg(err.message))
+                    setMsg('Journal genere avec succees.')
                 }
             })
             .catch((err) => setMsg(err.message));
@@ -121,7 +137,7 @@ const Journal = ({setMsg, msg}) => {
                     />
                     <button
                         onClick={generateJournal}
-                        className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-full transition"
+                        className={`bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-full transition ${hour < 22 ? 'hidden' : ''}`}
                     >
                         Générer le journal
                     </button>

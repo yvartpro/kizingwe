@@ -3,8 +3,10 @@ import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import axios from 'axios'
+import { Delete as DeleteIcon } from '@mui/icons-material'
 
-const SellAndOrder = ({ products, waiters }) => {
+
+const SellAndOrder = ({ products, waiters , setMsg}) => {
   const [item, setItem] = useState({ id: '', name: '', quantity: '', price: '' })
   const [orderList, setOrderList] = useState([])
   const [waiter, setWaiter] = useState('')
@@ -29,6 +31,8 @@ const SellAndOrder = ({ products, waiters }) => {
     axios.post('http://localhost/sell.php', { items: orderList, waiter })
       .then(resp => {
         setWaiter('')
+        setOrderList([])
+        setMsg('Commande ajoutee.')
       })
       .catch(err => console.error(err))
   }
@@ -43,20 +47,21 @@ const SellAndOrder = ({ products, waiters }) => {
           {/* Sélection des articles et serveurs */}
           <div className="bg-gray-100 p-4 rounded-md">
             <div className="flex flex-wrap gap-4">
-              <select onChange={getItem} value={item.id} className="border p-2 rounded">
+              <select onChange={getItem} value={item.id} className="border p-1 rounded text-sm  outline-none focus:border-blue-500">
                 <option>--Article--</option>
                 {products.map(prod => <option key={prod.id} value={prod.id}>{prod.prod_name}</option>)}
               </select>
               <input type="number" min="1" placeholder="Quantité"
-                className="border p-2 w-20 rounded"
+                className="border p-1 text-sm w-24 rounded outline-none focus:border-blue-500"
                 value={item.quantity}
                 onChange={(e) => setItem(prev => ({ ...prev, quantity: e.target.value }))} />
-              <button onClick={pushItem} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+              <button onClick={pushItem} className="bg-blue-500 text-white px-4 py-1 text
+               rounded hover:bg-blue-700">
                 Ajouter
               </button>
             </div>
             <div className="my-4">
-              <select onChange={(e) => setWaiter(e.target.value)} value={waiter} className="border p-2 w-full rounded">
+              <select onChange={(e) => setWaiter(e.target.value)} value={waiter} className="border p-2 w-full rounded outline-none text-sm focus:border-blue-500">
                 <option>--Serveur--</option>
                 {waiters.map(w => <option key={w.id} value={w.id}>{w.name}</option>)}
               </select>
